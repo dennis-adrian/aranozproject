@@ -9,38 +9,41 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 
-require 'app/start.php';
+use classes\ctrl_session\Ctrl_Sesion;
 
-if (!isset($_POST['product'], $_POST['price'])) {
+require 'app/start.php';
+include_once '../classes/array_list.php';
+include_once '../classes/ctrl_sesion.php';
+include_once '../classes/ctrl_sesion.php';
+include_once '../classes/detalleventa.php';
+Ctrl_Sesion::activar_sesion();
+
+if (!($_GET["op"] == "confirmar" && isset($_SESSION["carrito"]))) {
     die();
 }
-
-$product = $_POST['product'];
-$price = $_POST['price'];
-$shipping = 2.00;
-$total = $price + $shipping;
 
 //definir el payment method
 $payer = new Payer();
 $payer->setPaymentMethod('paypal');
 
-//definimos los productos que van a ser pagados 
 $item = new Item();
-$item->setName($product)
-    ->setCurrency('USD')
-    ->setQuantity(1)
-    ->setPrice($price);
-
 $itemList = new ItemList();
-$itemList->setItems([$item]);
-$details = new Details();
-$details->setShipping($shipping)
-    ->setSubtotal($price);
+
+$carrito = $_SESSION["carrito"];
+$total = 0;
+foreach ($carrito->list as $key => $registro) {
+    $item->setName($registro->getNombre());
+    $item->setCurrency('USD');
+    $item->setPrice($registro->getPrecio());
+    $item->setQuantity($registro->getCantidad());
+    $subtotal = $item->getQuantity() * $item->getPrice();
+    $total = $total + $subtotal;
+    $itemList->setItems($item);
+}
 
 $amount = new Amount();
 $amount->setCurrency('USD')
-    ->setTotal($total)
-    ->setDetails($details);
+    ->setTotal($total);
 $transaction = new Transaction();
 $transaction->setAmount($amount)
     ->setItemList($itemList)

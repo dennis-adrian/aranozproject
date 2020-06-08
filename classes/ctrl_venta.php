@@ -16,6 +16,7 @@ class Ctrl_Venta
             $cnx->execute("start transaction");
             //en caso de que no se puedan guardar los datos, se ejecuta un rollback
             if (!$objVenta->guardar()) {
+
                 $cnx->execute("rollback");
                 return 0;
             } else {
@@ -28,7 +29,7 @@ class Ctrl_Venta
                     $item->setCnx($cnx);
                     if (!$item->guardar()) {
                         $cnx->execute("rollback");
-                        return 0;
+                        return "hubo rollback";
                     }
                 }
                 //si se terminan de guardar todos los objetos del carrito en detalle_venta entonces confirmamos la transacción

@@ -72,7 +72,7 @@ class Venta
         $fecha = $this->fecha;
         $estado = $this->estado;
 
-        $sql = "insert into ventas values(null,'$fecha', $cliente_id, '$estado')";
+        $sql = "insert into venta values(null,'$fecha', $cliente_id, '$estado')";
         $resultado = $this->cnx->execute($sql);
 
         if (isset($resultado) && $this->cnx->filas_afectadas() > 0) {
@@ -83,7 +83,7 @@ class Venta
     }
     function mostrarVentaPorCliente($idCliente, $nombrereporte)
     {
-        $sql = "select * from ventas where cliente_id = $idCliente";
+        $sql = "select * from venta where cliente_id = $idCliente";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo

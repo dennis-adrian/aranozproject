@@ -122,3 +122,14 @@ VALUES(
         'https://images.pexels.com/photos/378006/pexels-photo-378006.jpeg?cs=srgb&dl=bouquet-bright-coffee-coffee-cup-378006.jpg&fm=jpg',
         1
     );
+INSERT INTO usuario
+VALUES (
+        0,
+        'cliente',
+        'adrian guzman',
+        'adrian@gmail.com',
+        'av cumavi',
+        'adrian',
+        MD5('123456'),
+        '78569472'
+    )

@@ -4,8 +4,8 @@
 use classes\producto\Producto;
 use classes\conexion\Conexion;
 //=========================================
-include_once("classes/conexion.php");
-include_once("classes/producto.php");
+require 'classes/conexion.php';
+require 'classes/producto.php';
 //require_once("classes/ctrl_sesion.php");
 // Ctrl_Sesion::verificar_inicio_sesion();
 // $nombre_usuario = Ctrl_Sesion::get_nombre_usuario();

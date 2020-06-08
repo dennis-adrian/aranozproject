@@ -3,7 +3,11 @@
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
+use \classes\ctrl_session\Ctrl_Sesion;
+
 require 'app/start.php';
+include_once '../classes/ctrl_sesion.php';
+Ctrl_Sesion::activar_sesion();
 
 //hacemos este proceso para confirmar el pago y se haga la transferencia
 if (!isset($_GET['success'], $_GET['paymentId'], $_GET['PayerID'])) {
@@ -28,4 +32,4 @@ try {
   die();
 }
 
-echo 'Payment made. Thanks!';
+header("location:../process/guardar_venta.php?op=pagoconfirmado&pagoid=$paymentId");

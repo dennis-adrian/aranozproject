@@ -1,5 +1,55 @@
 <?php
+//seteamos la zona horaria por defecto para que al usar fechas el servidor use la hora de Bolivia
+date_default_timezone_set("America/La_Paz");
+//============uso de namespaces============
+use classes\ctrl_session\Ctrl_Sesion;
+use classes\producto\Producto;
+use classes\conexion\Conexion;
+use classes\detalleventa\DetalleVenta;
+use classes\venta\Venta;
+use classes\ctrl_venta\Ctrl_Venta;
+use paypal\pago\Pay;
 
+//=========================================
+include_once 'classes/array_list.php';
+include_once 'classes/ctrl_sesion.php';
+include_once 'classes/conexion.php';
+include_once 'classes/venta.php';
+include_once 'classes/ctrl_venta.php';
+
+// Ctrl_Sesion::verificar_inicio_sesion();
+// $nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
+Ctrl_Sesion::activar_sesion();
+$cnx = new Conexion();
+$mensaje = "";
+
+//=================Procesar Confirmar Venta
+if ($_GET["op"] == "confirmar" && isset($_SESSION["carrito"])) {
+  header('location:paypal/checkout.php?op=confirmar');
+} else if (isset($_GET["op"]) && $_GET["op"] == "comprar" && !isset($_SESSION["carrito"])) {
+  $mensaje = "El carrito está vacío, debe agregar productos al carrito";
+}
+if (isset($_SESSION["objVenta"]) && $_GET["op"] == "pagoconfirmado") {
+  $objVenta = $_SESSION["objVenta"];
+  $objCarrito = $_SESSION["carrito"];
+  var_dump($objVenta);
+  $id_venta = Ctrl_Venta::guardar_venta($cnx, $objVenta, $objCarrito);
+  if ($id_venta > 0) {
+    unset($_SESSION["carrito"]);
+    unset($_SESSION["ojbVenta"]);
+    unset($_SESSION["pago"]);
+    header("location:index.php?msg=venta guardada correctamente, nro $id_venta");
+  } else {
+    $mensaje = "Error al guardar los datos de la compra";
+  }
+}
+//=================Procesando Quitar del Carrito 
+if (isset($_GET["key"])) {
+  $key = $_GET["key"];
+  $objCarrito = $_SESSION["carrito"];
+  $objCarrito->remove($key);
+  $_SESSION["carrito"] = $objCarrito;
+}
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -155,8 +205,8 @@
             </tbody>
           </table>
           <div class="checkout_btn_inner float-right">
-            <a class="btn_1" href="login.php">Continue Shopping</a>
-            <a class="btn_1 checkout_btn_1" href="checkout.php">Proceed to checkout</a>
+            <a class="btn_1" href="category.php">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="cart.php?op=confirmar">Pay with PayPal</a>
           </div>
         </div>
       </div>

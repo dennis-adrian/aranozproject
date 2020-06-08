@@ -100,7 +100,7 @@ class DetalleVenta
         $cantidad = $this->cantidad;
         $precio = $this->precio;
 
-        $sql = "insert into detalleventas values(null,$venta_id, $producto_id, $cantidad, $precio)";
+        $sql = "insert into detalleventa values(null,$venta_id, $producto_id, $cantidad, $precio)";
         $resultado = $this->cnx->execute($sql);
 
         if (isset($resultado) && $this->cnx->filas_afectadas() > 0) {

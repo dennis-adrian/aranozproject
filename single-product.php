@@ -1,13 +1,17 @@
 <?php
 //============uso de namespaces============
-//use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_session\Ctrl_Sesion;
 use classes\producto\Producto;
 use classes\conexion\Conexion;
+use classes\detalleventa\DetalleVenta;
 //=========================================
 include_once("classes/conexion.php");
 include_once("classes/producto.php");
-// require_once("../classes/ctrl_sesion.php");
+require_once("classes/detalleventa.php");
+require_once("classes/array_list.php");
+require_once("classes/ctrl_sesion.php");
 // Ctrl_Sesion::verificar_inicio_sesion();
+Ctrl_Sesion::activar_sesion();
 
 $cnx = new Conexion();
 $producto = new Producto($cnx);
@@ -21,6 +25,26 @@ $descripcion = 0;
 $imagen = "";
 $error = "";
 
+if (isset($_POST["btnAddToCart"])) {
+  $id_producto = $_POST["txtId"];
+  $nombre_adicionar = $_POST["txtNombre"];
+  $cantidad_adicionar = $_POST["txtCantidad"];
+  $precio_adicionar = $_POST["txtPrecio"];
+  //si tengo un objeto carrito significa que ya hay productos en el carrito, pero si no hay un objeto
+  //carrito significa que este es el primer producto que el usuario esta agregando al carrito
+  //y hay que crear el carrito
+  if (!isset($_SESSION["carrito"])) {
+    $objCarrito = new ArrayList();
+    $_SESSION["carrito"] = $objCarrito;
+  }
+  $objCarrito = $_SESSION["carrito"];
+  $objDetalleProducto = new DetalleVenta($cnx);
+  $objDetalleProducto->inicializar(0, 0, $id_producto, $cantidad_adicionar, $precio_adicionar, $nombre_adicionar);
+  $objCarrito->Add($objDetalleProducto);
+  $_SESSION["carrito"] = $objCarrito;
+  $mensaje = "$nombre_adicionar agregado(a) al carrito";
+  header("location:cart.php?op=comprar");
+}
 if (isset($_GET["productid"])) {
   $id = $_GET["productid"];
   if ($producto->mostrar_producto_detalle($id)) {
@@ -33,7 +57,7 @@ if (isset($_GET["productid"])) {
   } else
     header("location:category.php?msg=No existe el producto");
 } else {
-  header("location:category.php?msg=Tiene que elegir un producto");
+  //header("location:category.php?msg=Tiene que elegir un producto");
 }
 ?>
 <!doctype html>
@@ -105,15 +129,17 @@ if (isset($_GET["productid"])) {
             <p>
               <?php echo $descripcion; ?>
             </p>
-            <form action="cart.php" method="post">
+            <form action="single-product.php" method="post">
               <div class="card_area d-flex justify-content-between align-items-center">
                 <div class="product_count">
                   <span class="inumber-decrement"> <i class="ti-minus"></i></span>
                   <input type="hidden" name="txtId" value="<?php echo $id; ?>">
+                  <input type="hidden" name="txtNombre" value="<?php echo $nombre; ?>">
+                  <input type="hidden" name="txtPrecio" value="<?php echo $precio; ?>">
                   <input class="input-number" type="text" value="1" min="0" max="10" name="txtCantidad">
                   <span class="number-increment"> <i class="ti-plus"></i></span>
                 </div>
-                <button class="btn_3" type="submit">add to cart</button>
+                <button class="btn_3" type="submit" name="btnAddToCart">add to cart</button>
                 <a href="" class="like_us"> <i class="ti-heart"></i> </a>
               </div>
             </form>

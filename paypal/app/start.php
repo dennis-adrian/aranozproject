@@ -1,7 +1,7 @@
 <?php
 require 'vendor/autoload.php';
 
-define('SITE_URL', 'http://localhost/paypal');
+define('SITE_URL', 'http://localhost/aranoz/paypal');
 //todo dentro del paypal sdk usa namespaces
 $credencial = new \PayPal\Auth\OAuthTokenCredential(
     'AQ-2Og_yAGyWU8-Hieuoa9FsrtfsElnaPVsEjsTo71qkjAxiOKhUtS_XKHtlLCSBUF24B7oQZIEC0cPy',
