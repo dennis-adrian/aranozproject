@@ -1,32 +1,11 @@
+<?php
+
+?>
 <!doctype html>
 <html lang="zxx">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>aranaz</title>
-  <link rel="icon" href="img/favicon.png">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- animate CSS -->
-  <link rel="stylesheet" href="css/animate.css">
-  <!-- owl carousel CSS -->
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <!-- nice select CSS -->
-  <link rel="stylesheet" href="css/nice-select.css">
-  <!-- font awesome CSS -->
-  <link rel="stylesheet" href="css/all.css">
-  <!-- flaticon CSS -->
-  <link rel="stylesheet" href="css/flaticon.css">
-  <link rel="stylesheet" href="css/themify-icons.css">
-  <!-- font awesome CSS -->
-  <link rel="stylesheet" href="css/magnific-popup.css">
-  <!-- swiper CSS -->
-  <link rel="stylesheet" href="css/slick.css">
-  <link rel="stylesheet" href="css/price_rangs.css">
-  <!-- style CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <?php include 'head.php'; ?>
 </head>
 
 <body>
@@ -154,14 +133,12 @@
                 </td>
               </tr>
               <tr class="bottom_button">
-                <td>
-                  <a class="btn_1" href="#">Update Cart</a>
-                </td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td>
                   <div class="cupon_text float-right">
-                    <a class="btn_1" href="#">Close Coupon</a>
+                    <a class="btn_1" href="#">Update Cart</a>
                   </div>
                 </td>
               </tr>
@@ -175,52 +152,11 @@
                   <h5>$2160.00</h5>
                 </td>
               </tr>
-              <tr class="shipping_area">
-                <td></td>
-                <td></td>
-                <td>
-                  <h5>Shipping</h5>
-                </td>
-                <td>
-                  <div class="shipping_box">
-                    <ul class="list">
-                      <li>
-                        <a href="#">Flat Rate: $5.00</a>
-                      </li>
-                      <li>
-                        <a href="#">Free Shipping</a>
-                      </li>
-                      <li>
-                        <a href="#">Flat Rate: $10.00</a>
-                      </li>
-                      <li class="active">
-                        <a href="#">Local Delivery: $2.00</a>
-                      </li>
-                    </ul>
-                    <h6>
-                      Calculate Shipping
-                      <i class="fa fa-caret-down" aria-hidden="true"></i>
-                    </h6>
-                    <select class="shipping_select">
-                      <option value="1">Bangladesh</option>
-                      <option value="2">India</option>
-                      <option value="4">Pakistan</option>
-                    </select>
-                    <select class="shipping_select section_bg">
-                      <option value="1">Select a State</option>
-                      <option value="2">Select a State</option>
-                      <option value="4">Select a State</option>
-                    </select>
-                    <input type="text" placeholder="Postcode/Zipcode" />
-                    <a class="btn_1" href="#">Update Details</a>
-                  </div>
-                </td>
-              </tr>
             </tbody>
           </table>
           <div class="checkout_btn_inner float-right">
-            <a class="btn_1" href="#">Continue Shopping</a>
-            <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+            <a class="btn_1" href="login.php">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="checkout.php">Proceed to checkout</a>
           </div>
         </div>
       </div>

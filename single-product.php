@@ -1,28 +1,46 @@
+<?php
+//============uso de namespaces============
+//use classes\ctrl_session\Ctrl_Sesion;
+use classes\producto\Producto;
+use classes\conexion\Conexion;
+//=========================================
+include_once("classes/conexion.php");
+include_once("classes/producto.php");
+// require_once("../classes/ctrl_sesion.php");
+// Ctrl_Sesion::verificar_inicio_sesion();
+
+$cnx = new Conexion();
+$producto = new Producto($cnx);
+
+$id = 0;
+$nombre = "";
+$precio = "";
+$categoria = 0;
+$estado = 0;
+$descripcion = 0;
+$imagen = "";
+$error = "";
+
+if (isset($_GET["productid"])) {
+  $id = $_GET["productid"];
+  if ($producto->mostrar_producto_detalle($id)) {
+    $nombre = $producto->getNombre();
+    $precio = $producto->getPrecio();
+    $categoria = $producto->getCategoria_id();
+    $estado = $producto->getEstado();
+    $descripcion = $producto->getDescripcion();
+    $imagen = $producto->getImagen();
+  } else
+    header("location:category.php?msg=No existe el producto");
+} else {
+  header("location:category.php?msg=Tiene que elegir un producto");
+}
+?>
 <!doctype html>
 <html lang="zxx">
 
 <head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>aranoz</title>
-  <link rel="icon" href="img/favicon.png">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- animate CSS -->
-  <link rel="stylesheet" href="css/animate.css">
-  <!-- owl carousel CSS -->
-  <link rel="stylesheet" href="css/owl.carousel.min.css">
-  <link rel="stylesheet" href="css/lightslider.min.css">
-  <!-- font awesome CSS -->
-  <link rel="stylesheet" href="css/all.css">
-  <!-- flaticon CSS -->
-  <link rel="stylesheet" href="css/flaticon.css">
-  <link rel="stylesheet" href="css/themify-icons.css">
-  <!-- font awesome CSS -->
-  <link rel="stylesheet" href="css/magnific-popup.css">
-  <!-- style CSS -->
-  <link rel="stylesheet" href="css/style.css">
+  <?php include 'head.php'; ?>
 </head>
 
 <body>
@@ -55,17 +73,17 @@
         <div class="col-lg-7 col-xl-7">
           <div class="product_slider_img">
             <div id="vertical">
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
+              <div data-thumb="<?php echo $imagen; ?>">
+                <img src="<?php echo $imagen; ?>" />
               </div>
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
+              <div data-thumb="<?php echo $imagen; ?>">
+                <img src="<?php echo $imagen; ?>" />
               </div>
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
+              <div data-thumb="<?php echo $imagen; ?>">
+                <img src="<?php echo $imagen; ?>" />
               </div>
-              <div data-thumb="img/product/single-product/product_1.png">
-                <img src="img/product/single-product/product_1.png" />
+              <div data-thumb="<?php echo $imagen; ?>">
+                <img src="<?php echo $imagen; ?>" />
               </div>
             </div>
           </div>
@@ -73,30 +91,32 @@
         <div class="col-lg-5 col-xl-4">
           <div class="s_product_text">
             <h5>previous <span>|</span> next</h5>
-            <h3>Faded SkyBlu Denim Jeans</h3>
-            <h2>$149.99</h2>
+            <h3><?php echo $nombre; ?></h3>
+            <h2><?php echo $precio; ?></h2>
             <ul class="list">
               <li>
                 <a class="active" href="#">
-                  <span>Category</span> : Household</a>
+                  <span>Category</span> : <?php echo $categoria; ?></a>
               </li>
               <li>
-                <a href="#"> <span>Availibility</span> : In Stock</a>
+                <a href="#"> <span>Availibility</span> : <?php echo $estado; ?></a>
               </li>
             </ul>
             <p>
-              First replenish living. Creepeth image image. Creeping can't, won't called.
-              Two fruitful let days signs sea together all land fly subdue
+              <?php echo $descripcion; ?>
             </p>
-            <div class="card_area d-flex justify-content-between align-items-center">
-              <div class="product_count">
-                <span class="inumber-decrement"> <i class="ti-minus"></i></span>
-                <input class="input-number" type="text" value="1" min="0" max="10">
-                <span class="number-increment"> <i class="ti-plus"></i></span>
+            <form action="cart.php" method="post">
+              <div class="card_area d-flex justify-content-between align-items-center">
+                <div class="product_count">
+                  <span class="inumber-decrement"> <i class="ti-minus"></i></span>
+                  <input type="hidden" name="txtId" value="<?php echo $id; ?>">
+                  <input class="input-number" type="text" value="1" min="0" max="10" name="txtCantidad">
+                  <span class="number-increment"> <i class="ti-plus"></i></span>
+                </div>
+                <button class="btn_3" type="submit">add to cart</button>
+                <a href="" class="like_us"> <i class="ti-heart"></i> </a>
               </div>
-              <a href="#" class="btn_3">add to cart</a>
-              <a href="#" class="like_us"> <i class="ti-heart"></i> </a>
-            </div>
+            </form>
           </div>
         </div>
       </div>
