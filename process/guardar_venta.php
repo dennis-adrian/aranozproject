@@ -31,18 +31,14 @@ if (isset($_GET["op"], $_GET["pagoid"]) && $_GET["op"] == "pagoconfirmado" && is
         $objVenta->setEstado("P");
         $fecha  = date("Y/m/d H:i:s");
         $objVenta->setFecha($fecha);
-        var_dump($objVenta);
         echo '<hr>';
-        var_dump($cnx);
         echo '<hr>';
-        var_dump($objCarrito);
         $id_venta = Ctrl_Venta::guardar_venta($cnx, $objVenta, $objCarrito);
-        var_dump($id_venta);
         if ($id_venta > 0) {
             unset($_SESSION["carrito"]);
             unset($_SESSION["paymentId"]);
             unset($_SESSION["PayerID"]);
-            header("location:../index.php?msg=venta guardada  correctamente, nro $id_venta");
+            header("location:../index.php?msg=venta guardada  correctamente&idventa=$id_venta");
         } else {
             $mensaje = "Error al guardar los datos de la compra";
         }

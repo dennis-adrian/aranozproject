@@ -16,6 +16,9 @@ include_once 'classes/ctrl_sesion.php';
 include_once 'classes/conexion.php';
 include_once 'classes/venta.php';
 include_once 'classes/ctrl_venta.php';
+include_once 'classes/detalleventa.php';
+include_once 'classes/producto.php';
+
 
 // Ctrl_Sesion::verificar_inicio_sesion();
 // $nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
@@ -23,6 +26,10 @@ Ctrl_Sesion::activar_sesion();
 $cnx = new Conexion();
 $mensaje = "";
 
+if (!isset($_GET["op"])) {
+  header("location:index.php?msg=operacion incorrecta");
+  die();
+}
 //=================Procesar Confirmar Venta
 if ($_GET["op"] == "confirmar" && isset($_SESSION["carrito"])) {
   header('location:paypal/checkout.php?op=confirmar');
@@ -97,109 +104,71 @@ if (isset($_GET["key"])) {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>
-                  <div class="media">
-                    <div class="d-flex">
-                      <img src="img/product/single-product/cart-1.jpg" alt="" />
-                    </div>
-                    <div class="media-body">
-                      <p>Minimalistic shop for multipurpose use</p>
-                    </div>
+
+              <?php
+              //aqui mostrar el carrito
+              $nro = 1;
+              $total = 0;
+              $producto = new Producto($cnx);
+              //iteramos sobre el carrito si es que el carrito tiene información
+              if (isset($_SESSION["carrito"])) {
+                $objCarrito = $_SESSION["carrito"];
+                foreach ($objCarrito->list as $key => $registro) {
+                  $id = $registro->getProducto_id();
+                  $imagen = $producto->mostrar_imagen_id($id);
+                  $nombre = $registro->getNombre();
+                  $precio = $registro->getPrecio();
+                  $cantidad = $registro->getCantidad();
+                  $subtotal = $cantidad * $precio;
+                  $total = $total + $subtotal;
+                  $linkeliminar = "
+                  <div class='product_count'>
+                    <form action='cart.php' method='post'>
+                      <input type='text' value='$cantidad'>
+                      <a
+                        class='btn_1' 
+                        href='cart.php?key=$key&op=eliminar'>
+                          <img id='img-trashbin' src='img/trash.png'>
+                      </a>
+                    </form>
                   </div>
-                </td>
-                <td>
-                  <h5>$360.00</h5>
-                </td>
-                <td>
-                  <div class="product_count">
-                    <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-                    <input class="input-number" type="text" value="1" min="0" max="10">
-                    <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
-                  </div>
-                </td>
-                <td>
-                  <h5>$720.00</h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="media">
-                    <div class="d-flex">
-                      <img src="img/product/single-product/cart-1.jpg" alt="" />
-                    </div>
-                    <div class="media-body">
-                      <p>Minimalistic shop for multipurpose use</p>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <h5>$360.00</h5>
-                </td>
-                <td>
-                  <div class="product_count">
-                    <!-- <input type="text" value="1" min="0" max="10" title="Quantity:"
-                      class="input-text qty input-number" />
-                    <button
-                      class="increase input-number-increment items-count" type="button">
-                      <i class="ti-angle-up"></i>
-                    </button>
-                    <button
-                      class="reduced input-number-decrement items-count" type="button">
-                      <i class="ti-angle-down"></i>
-                    </button> -->
-                    <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-                    <input class="input-number" type="text" value="1" min="0" max="10">
-                    <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
-                  </div>
-                </td>
-                <td>
-                  <h5>$720.00</h5>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="media">
-                    <div class="d-flex">
-                      <img src="img/product/single-product/cart-1.jpg" alt="" />
-                    </div>
-                    <div class="media-body">
-                      <p>Minimalistic shop for multipurpose use</p>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <h5>$360.00</h5>
-                </td>
-                <td>
-                  <div class="product_count">
-                    <span class="input-number-decrement"> <i class="ti-angle-down"></i></span>
-                    <input class="input-number" type="text" value="1" min="0" max="10">
-                    <span class="input-number-increment"> <i class="ti-angle-up"></i></span>
-                  </div>
-                </td>
-                <td>
-                  <h5>$720.00</h5>
-                </td>
-              </tr>
-              <tr class="bottom_button">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>
-                  <div class="cupon_text float-right">
-                    <a class="btn_1" href="#">Update Cart</a>
-                  </div>
-                </td>
-              </tr>
+                ";
+
+                  echo "
+                  <tr>
+                    <td>
+                      <div class='media'>
+                        <div class='d-flex' style='width: 256px;'>
+                          <img src='$imagen' alt=''/>
+                        </div>
+                        <div class='media-body'>
+                          <p>$nombre</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <h5>$$precio</h5>
+                    </td>
+                    <td>
+                      $linkeliminar
+                    </td>
+                    <td>
+                      <h5>$$subtotal</h5>
+                    </td>
+                  </tr>
+                ";
+                  $nro++;
+                }
+              }
+              ?>
               <tr>
                 <td></td>
                 <td></td>
                 <td>
-                  <h5>Subtotal</h5>
+                  <h5>Total</h5>
                 </td>
                 <td>
-                  <h5>$2160.00</h5>
+                  <h5>$<?php echo $total; ?></h5>
                 </td>
               </tr>
             </tbody>
@@ -211,6 +180,7 @@ if (isset($_GET["key"])) {
         </div>
       </div>
   </section>
+
   <!--================End Cart Area =================-->
 
   <!--::footer_part start::-->

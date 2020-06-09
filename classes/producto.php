@@ -161,6 +161,18 @@ class Producto
             return false;
         }
     }
+    function mostrar_imagen_id($id)
+    {
+        $sql = "SELECT * FROM producto WHERE id = $id";
+        $resultado = $this->cnx->execute($sql);
+        if (isset($resultado) && $this->cnx->filas_afectadas() > 0) {
+            $registro = $this->cnx->next($resultado);
+            $this->imagen = $registro["imagen"];
+            return $this->imagen;
+        } else {
+            return "";
+        }
+    }
     function guardar()
     {
         $codigo = $this->codigo;

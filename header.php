@@ -57,7 +57,7 @@
                         <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
                         <a href=""><i class="ti-heart"></i></a>
                         <div class="dropdown cart">
-                            <a class="dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="dropdown-toggle" href="cart.php" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-cart-plus"></i>
                             </a>
                             <!-- <div class="dropdown-menu" aria-labelledby="navbarDropdown">

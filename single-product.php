@@ -44,6 +44,7 @@ if (isset($_POST["btnAddToCart"])) {
   $_SESSION["carrito"] = $objCarrito;
   $mensaje = "$nombre_adicionar agregado(a) al carrito";
   header("location:cart.php?op=comprar");
+  die();
 }
 if (isset($_GET["productid"])) {
   $id = $_GET["productid"];
@@ -57,7 +58,7 @@ if (isset($_GET["productid"])) {
   } else
     header("location:category.php?msg=No existe el producto");
 } else {
-  //header("location:category.php?msg=Tiene que elegir un producto");
+  header("location:category.php?msg=Tiene que elegir un producto");
 }
 ?>
 <!doctype html>

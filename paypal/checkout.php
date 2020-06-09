@@ -21,6 +21,11 @@ Ctrl_Sesion::activar_sesion();
 if (!($_GET["op"] == "confirmar" && isset($_SESSION["carrito"]))) {
     die();
 }
+// if (isset($_GET["op"]) && $_GET["op"] == "confirmar" && isset($_SESSION["carrito"])) {
+//     $objCarrito = $_SESSION["carrito"];
+//     if ($objCarrito->Size() < 1)
+//         header('location:../index.php?msg=Carrito vacio');
+// }
 
 //definir el payment method
 $payer = new Payer();
