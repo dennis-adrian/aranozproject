@@ -20,9 +20,9 @@ include_once 'classes/detalleventa.php';
 include_once 'classes/producto.php';
 
 
-// Ctrl_Sesion::verificar_inicio_sesion();
-// $nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
-Ctrl_Sesion::activar_sesion();
+Ctrl_Sesion::verificar_inicio_sesion();
+$nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
+//Ctrl_Sesion::activar_sesion();
 $cnx = new Conexion();
 $mensaje = "";
 

@@ -40,7 +40,7 @@ class Ctrl_Sesion
         if (isset($_SESSION[Ctrl_Sesion::$login_usuario]))
             return true;
         else
-            header('location:../frmlogin.php?msg=no esta logueado!!!');
+            header('location:login.php?msg=Tiene que iniciar sesión');
     }
     static function cerrar_sesion()
     {
@@ -53,6 +53,6 @@ class Ctrl_Sesion
             setcookie(session_name(), '', time() - 65464, '/');
         }
         session_destroy();
-        header('location:../frmlogin.php?msg=sesion cerrada correctamente!!!');
+        header('location:login.php?msg=sesion cerrada correctamente!!!');
     }
 }

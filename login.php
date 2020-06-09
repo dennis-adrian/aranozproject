@@ -9,12 +9,15 @@ include_once("classes/conexion.php");
 include_once("classes/usuario.php");
 include_once("classes/ctrl_sesion.php");
 
+Ctrl_Sesion::activar_sesion();
+
 $cnx = new Conexion();
 $usuario = new Usuario($cnx);
 
 $id = 0;
 $login = "";
 $password = "";
+$rol = "";
 
 $error = "";
 
@@ -26,6 +29,7 @@ function procesarIniciarSession()
   global $usuario;
   global $login;
   global $password;
+  global $rol;
   global $error;
 
 
@@ -33,9 +37,16 @@ function procesarIniciarSession()
   $password = $_POST["txtPassword"];
 
   if ($usuario->loguear($login, $password) == true) {
-    //guardar datos en la session 
+    //guardar datos en la session
     Ctrl_Sesion::iniciar_sesion($login, $usuario->getId(), $usuario->getNombre());
-    header("location:index.php?msg=logueado correctamente");
+    $id = $usuario->getId();
+    $nombre = $usuario->getNombre();
+    $rol = $usuario->getRol();
+    if ($rol === "cliente") {
+      header("location:index.php?msg=logueado correctamente");
+    } else {
+      header("location:prueba.php?msg=logueado correctamente");
+    }
   } else {
     $error = "Error al iniciar revise sus datos de acceso";
   }

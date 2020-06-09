@@ -1,3 +1,11 @@
+<?php
+
+use \classes\ctrl_session\Ctrl_Sesion;
+
+include_once 'classes/ctrl_sesion.php';
+
+Ctrl_Sesion::activar_sesion();
+?>
 <!doctype html>
 <html lang="zxx">
 

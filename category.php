@@ -1,14 +1,14 @@
 <?php
 //============uso de namespaces============
-// use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_session\Ctrl_Sesion;
 use classes\producto\Producto;
 use classes\conexion\Conexion;
 //=========================================
 require 'classes/conexion.php';
 require 'classes/producto.php';
-//require_once("classes/ctrl_sesion.php");
-// Ctrl_Sesion::verificar_inicio_sesion();
-// $nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
+require_once("classes/ctrl_sesion.php");
+Ctrl_Sesion::verificar_inicio_sesion();
+$nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
 $cnx = new Conexion();
 $producto = new Producto($cnx);
 

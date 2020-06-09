@@ -43,15 +43,31 @@
                     <div class="hearer_icon d-flex">
                         <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
                         <a href="cart.php?op=comprar"><i class="fas fa-cart-plus"></i></a>
-                        <div class="dropdown cart">
-                            <a class="dropdown-toggle" href="" id="navbarDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-cart-plus"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <div class="single_product">
+                        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <?php
+                                        //============uso de namespaces============
+                                        use classes\ctrl_session\Ctrl_Sesion;
 
-                                </div>
-                            </div>
+                                        include_once 'classes/ctrl_sesion.php';
+                                        //=========================================
+                                        if (isset($_SESSION["nombre_usuario"])) {
+                                            $nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
+                                            echo ($nombre_usuario);
+                                        } else {
+                                            echo "Sin sesión";
+                                        }
+                                        ?>
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="#">Mi Cuenta</a>
+                                        <a class="dropdown-item" href="process/cerrar_sesion.php">Cerrar Sesión</a>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </nav>

@@ -16,9 +16,8 @@ require_once("../classes/array_list.php");
 require_once("../classes/venta.php");
 require_once("../classes/ctrl_venta.php");
 
-Ctrl_Sesion::activar_sesion();
-//Ctrl_Sesion::verificar_inicio_sesion();
-//$nombre_usuario = Ctrl_Sesion::get_nombre_usuario();
+Ctrl_Sesion::verificar_inicio_sesion();
+
 $cnx = new Conexion();
 $mensaje = "";
 //=================Procesar Confirmar Venta
@@ -26,8 +25,8 @@ if (isset($_GET["op"], $_GET["pagoid"]) && $_GET["op"] == "pagoconfirmado" && is
     $objCarrito = $_SESSION["carrito"];
     if ($objCarrito->Size() >= 1) {
         $objVenta = new Venta($cnx);
-        //$objVenta->setCliente_id(Ctrl_Sesion::get_id_usuario());
-        $objVenta->setCliente_id(1);
+        $objVenta->setCliente_id(Ctrl_Sesion::get_id_usuario());
+        //$objVenta->setCliente_id(1);
         $objVenta->setEstado("P");
         $fecha  = date("Y/m/d H:i:s");
         $objVenta->setFecha($fecha);

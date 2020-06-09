@@ -133,3 +133,14 @@ VALUES (
         MD5('123456'),
         '78569472'
     )
+INSERT INTO usuario
+VALUES (
+        null,
+        'admin',
+        'admin',
+        'admin@gmail.com',
+        'av. admin',
+        'admin',
+        MD5('admin'),
+        '74584236'
+    )
