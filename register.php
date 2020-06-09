@@ -1,7 +1,7 @@
 <?php
 //============uso de namespaces============
 use classes\conexion\Conexion;
-use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_sesion\Ctrl_Sesion;
 use classes\usuario\Usuario;
 
 //=========================================

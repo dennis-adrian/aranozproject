@@ -1,6 +1,6 @@
 <?php
 
-use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_sesion\Ctrl_Sesion;
 use classes\producto\Producto;
 use classes\conexion\Conexion;
 use classes\detalleventa\DetalleVenta;

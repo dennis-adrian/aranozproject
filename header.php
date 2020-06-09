@@ -50,7 +50,7 @@
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <?php
                                         //============uso de namespaces============
-                                        use classes\ctrl_session\Ctrl_Sesion;
+                                        use classes\ctrl_sesion\Ctrl_Sesion;
 
                                         include_once 'classes/ctrl_sesion.php';
                                         //=========================================

@@ -2,7 +2,7 @@
 //---------- USES DE LAS CLASES DE NAMESPACES ----
 use \classes\conexion\Conexion;
 use \classes\usuario\Usuario;
-use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_sesion\Ctrl_Sesion;
 
 //-----------------------------------------------
 include_once("classes/conexion.php");
@@ -38,14 +38,14 @@ function procesarIniciarSession()
 
   if ($usuario->loguear($login, $password) == true) {
     //guardar datos en la session
-    Ctrl_Sesion::iniciar_sesion($login, $usuario->getId(), $usuario->getNombre());
     $id = $usuario->getId();
     $nombre = $usuario->getNombre();
     $rol = $usuario->getRol();
+    Ctrl_Sesion::iniciar_sesion($login, $id, $nombre, $rol);
     if ($rol === "cliente") {
       header("location:index.php?msg=logueado correctamente");
     } else {
-      header("location:prueba.php?msg=logueado correctamente");
+      header("location:formsadm/index.php?msg=logueado correctamente");
     }
   } else {
     $error = "Error al iniciar revise sus datos de acceso";

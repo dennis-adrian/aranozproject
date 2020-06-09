@@ -9,7 +9,7 @@ use PayPal\Api\Payment;
 use PayPal\Api\RedirectUrls;
 use PayPal\Api\Transaction;
 
-use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_sesion\Ctrl_Sesion;
 
 require 'app/start.php';
 include_once '../classes/array_list.php';

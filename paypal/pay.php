@@ -3,7 +3,7 @@
 use PayPal\Api\Payment;
 use PayPal\Api\PaymentExecution;
 
-use \classes\ctrl_session\Ctrl_Sesion;
+use \classes\ctrl_sesion\Ctrl_Sesion;
 
 require 'app/start.php';
 include_once '../classes/ctrl_sesion.php';

@@ -183,7 +183,7 @@ class Producto
         $estado = $this->estado;
         $imagen = $this->imagen;
         $categoria_id = $this->categoria_id;
-        $sql = "insert into producto values(null, '$codigo', '$nombre',$precio,$descripcion, $stock, $estado, $imagen,$categoria_id)";
+        $sql = "insert into producto values(null, '$codigo', '$nombre', $precio, '$descripcion', $stock, $estado, '$imagen', $categoria_id)";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo
@@ -200,7 +200,7 @@ class Producto
         $p = $this->precio;
         $c = $this->stock;
         $id = $this->id;
-        $sql = "update productos set nombre ='$n', precio = $p, stock = $c where id=$id";
+        $sql = "update producto set nombre ='$n', precio = $p, stock = $c where id=$id";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo
@@ -214,7 +214,7 @@ class Producto
     function eliminar()
     {
         $id = $this->id;
-        $sql = "delete from productos where id=$id";
+        $sql = "delete from producto where id=$id";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo
@@ -228,7 +228,7 @@ class Producto
     function buscar($criterionombre)
     {
         //$id = $this->id;
-        $sql = "select * from productos where nombre like '%$criterionombre%' ";
+        $sql = "select * from producto where nombre like '%$criterionombre%' ";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo
@@ -242,7 +242,7 @@ class Producto
     function buscarPorId($id)
     {
         //$id = $this->id;
-        $sql = "select * from productos where id = $id ";
+        $sql = "select * from producto where id = $id ";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo
@@ -263,23 +263,28 @@ class Producto
     function buscarabm($criterionombre, $paginadestino)
     {
         //$id = $this->id;
-        $sql = "select * from productos where nombre like '%$criterionombre%' ";
+        $sql = "select * from producto where nombre like '%$criterionombre%' ";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo
         //y que la stock de filas afectadas sea mayour a cero
         if (isset($resultado) && $this->cnx->filas_afectadas() > 0) {
             echo "<table border='1'>";
-            echo "<tr><th>Id. </th><th>Nombre</th><th>Precio bs.</th><th>stock</th><th>Modificar</th><th>Eliminar</th></tr>";
+            echo "<tr><th>Id. </th><th>Codigo</th><th>Nombre</th><th>Precio bs.</th><th>Descripcion</th><th>Stock</th><th>Estado</th><th>Imagen</th><th>Categoria</th><th>Modificar</th><th>Eliminar</th></tr>";
             while ($registro = $this->cnx->next($resultado)) {
                 $id = $registro["id"];
+                $codigo = $registro["codigo"];
                 $nombre = $registro["nombre"];
                 $precio = $registro["precio"];
+                $descripcion = $registro["descripcion"];
                 $stock = $registro["stock"];
+                $estado = $registro["estado"];
+                $imagen = $registro["imagen"];
+                $categoria_id = $registro["categoria_id"];
                 $linkmodificar = "<a href='$paginadestino?id=$id&op=2'>Modificar</a>";
                 $linkeliminar = "<a href='$paginadestino?id=$id&op=3'>Eliminar</a>";
 
-                echo "<tr><th>$id</th><th>$nombre</th><th>$precio</th><th>$stock</th><th>$linkmodificar</th><th>$linkeliminar</th></tr>";
+                echo "<tr><th>$id</th><th>$codigo</th><th>$nombre</th><th>$precio</th><th>$descripcion</th><th>$stock</th><th>$estado</th><th>$imagen</th><th>$categoria_id</th><th>$linkmodificar</th><th>$linkeliminar</th></tr>";
             }
             echo "</table>";
         } else {
@@ -288,7 +293,7 @@ class Producto
     }
     function buscar_seleccion($criterionombre, $paginadestino)
     {
-        $sql = "select * from productos where nombre like '%$criterionombre%' ";
+        $sql = "select * from producto where nombre like '%$criterionombre%' ";
         $resultado = $this->cnx->execute($sql);
         //para evitar errores en la consulta
         //me aseguro que el resultado no sea nulo

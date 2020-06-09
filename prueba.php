@@ -1,6 +1,6 @@
 <?php
 
-use \classes\ctrl_session\Ctrl_Sesion;
+use \classes\ctrl_sesion\Ctrl_Sesion;
 
 include_once 'classes/ctrl_sesion.php';
 Ctrl_Sesion::verificar_inicio_sesion();

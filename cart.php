@@ -2,7 +2,7 @@
 //seteamos la zona horaria por defecto para que al usar fechas el servidor use la hora de Bolivia
 date_default_timezone_set("America/La_Paz");
 //============uso de namespaces============
-use classes\ctrl_session\Ctrl_Sesion;
+use classes\ctrl_sesion\Ctrl_Sesion;
 use classes\producto\Producto;
 use classes\conexion\Conexion;
 use classes\detalleventa\DetalleVenta;

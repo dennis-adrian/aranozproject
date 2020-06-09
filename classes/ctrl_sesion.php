@@ -1,12 +1,13 @@
 <?php
 
-namespace classes\ctrl_session;
+namespace classes\ctrl_sesion;
 
 class Ctrl_Sesion
 {
     private static $login_usuario = "login_usuario";
     private static  $id_usuario = "id_usuario";
     private static $nombre_usuario = "nombre_usuario";
+    private static $rol_usuario = "rol_usuario";
 
     public static function get_nombre_usuario()
     {
@@ -20,6 +21,10 @@ class Ctrl_Sesion
     {
         return $_SESSION[Ctrl_Sesion::$login_usuario];
     }
+    static function get_rol_usuario()
+    {
+        return $_SESSION[Ctrl_Sesion::$rol_usuario];
+    }
     static function activar_sesion()
     {
         try {
@@ -27,12 +32,13 @@ class Ctrl_Sesion
         } catch (\Exception $e) {
         }
     }
-    static function iniciar_sesion($login, $id_usuario, $nombre_usuario)
+    static function iniciar_sesion($login, $id_usuario, $nombre_usuario, $rol_usuario)
     {
         Ctrl_Sesion::activar_sesion();
         $_SESSION[Ctrl_Sesion::$login_usuario] = $login;
         $_SESSION[Ctrl_Sesion::$id_usuario] = $id_usuario;
         $_SESSION[Ctrl_Sesion::$nombre_usuario] = $nombre_usuario;
+        $_SESSION[Ctrl_Sesion::$rol_usuario] = $rol_usuario;
     }
     static function verificar_inicio_sesion()
     {
