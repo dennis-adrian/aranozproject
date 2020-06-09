@@ -1,3 +1,51 @@
+<?php
+//---------- USES DE LAS CLASES DE NAMESPACES ----
+use \classes\conexion\Conexion;
+use \classes\usuario\Usuario;
+use classes\ctrl_session\Ctrl_Sesion;
+
+//-----------------------------------------------
+include_once("classes/conexion.php");
+include_once("classes/usuario.php");
+include_once("classes/ctrl_sesion.php");
+
+$cnx = new Conexion();
+$usuario = new Usuario($cnx);
+
+$id = 0;
+$login = "";
+$password = "";
+
+$error = "";
+
+//=================verificnado metodo post
+//funciones
+function procesarIniciarSession()
+{
+  //se pone global para acceder a las variables globales desde una funcion
+  global $usuario;
+  global $login;
+  global $password;
+  global $error;
+
+
+  $login = $_POST["txtLogin"];
+  $password = $_POST["txtPassword"];
+
+  if ($usuario->loguear($login, $password) == true) {
+    //guardar datos en la session 
+    Ctrl_Sesion::iniciar_sesion($login, $usuario->getId(), $usuario->getNombre());
+    header("location:index.php?msg=logueado correctamente");
+  } else {
+    $error = "Error al iniciar revise sus datos de acceso";
+  }
+}
+//si preciona en el boton iniciar seccion
+if (isset($_POST["btnAceptar"])) {
+  procesarIniciarSession();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -50,22 +98,22 @@
                 Welcome Back ! <br />
                 Please Sign in now
               </h3>
-              <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+              <form class="row contact_form" action="login.php" method="post" novalidate="novalidate">
                 <div class="col-md-12 form-group p_star">
-                  <input type="text" class="form-control" id="name" name="name" value="" placeholder="Username" />
+                  <input type="text" class="form-control" id="txtLogin" name="txtLogin" value="<?php echo $login ?>" placeholder="email">
                 </div>
                 <div class="col-md-12 form-group p_star">
-                  <input type="password" class="form-control" id="password" name="password" value="" placeholder="Password" />
+                  <input type="password" class="form-control" id="txtPassword" name="txtPassword" value="<?php echo $password ?>" placeholder="password">
                 </div>
                 <div class="col-md-12 form-group">
                   <div class="creat_account d-flex align-items-center">
-                    <input type="checkbox" id="f-option" name="selector" />
+                    <input type="checkbox" id="f-option" name="selector">
                     <label for="f-option">Remember me</label>
                   </div>
-                  <button type="submit" value="submit" class="btn_3">
+                  <button type="submit" class="btn_3" name="btnAceptar" value="Aceptar">
                     log in
                   </button>
-                  <a class="lost_pass" href="#">forget password?</a>
+                  <a class="lost_pass" href="">forget password?</a>
                 </div>
               </form>
             </div>
