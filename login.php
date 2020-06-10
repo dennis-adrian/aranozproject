@@ -21,6 +21,11 @@ $rol = "";
 
 $error = "";
 
+//verificando si se acaba de registrar el usuario
+// if (isset($_GET["msg"]) && $_GET["msg"] = "cliente%registrado") {
+
+// }
+
 //=================verificnado metodo post
 //funciones
 function procesarIniciarSession()

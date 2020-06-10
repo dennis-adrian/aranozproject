@@ -1,14 +1,20 @@
 <?php
-require_once("../classes/producto.php");
-require_once("../classes/ctrl_sesion.php");
-require_once("../classes/conexion.php");
-require_once("../classes/array_list.php");
-require_once("../classes/detalleventa.php");
 
 use classes\ctrl_sesion\ctrl_sesion;
 use classes\producto\Producto;
 use classes\conexion\Conexion;
 use classes\detalleventa\DetalleVenta;
+use classes\venta\Venta;
+use classes\usuario\Usuario;
+
+require_once("../classes/producto.php");
+require_once("../classes/ctrl_sesion.php");
+require_once("../classes/conexion.php");
+require_once("../classes/array_list.php");
+require_once("../classes/detalleventa.php");
+require_once("../classes/venta.php");
+require_once("../classes/usuario.php");
+
 
 
 Ctrl_Sesion::verificar_inicio_sesion();
@@ -47,24 +53,26 @@ if (isset($_POST["btnAddCarrito"])) {
 <body>
   <?php include("incluir_menu_formularios.php"); ?>
   <div style="margin: 30px;">
-    <H1>VENTAS EN LINEA</H1>
-    <h2>Usuario: <?php echo (Ctrl_Sesion::get_nombre_usuario()); ?></h2>
-    <form name="form1" method="post" action="frmventas.php">
-      <div class="input-group mb-3">
-        <input name="txtCriterio" type="text" class="form-control" placeholder="nombre del productos a buscar" aria-label="Producto" aria-describedby="button-addon2">
-        <div class="input-group-append">
-          <button name="btnBuscar" class="btn btn-outline-secondary" type="submit" id="btnBuscar">Buscar</button>
-        </div>
-      </div>
+    <h1>Listado Ventas</h1>
+    <form class="form-inline my-2 my-lg-0" method="POST" action="frmventas.php">
+      <input class="form-control mr-sm-2" type="search" name="txtCriterio" id="txtCriterio" placeholder="Id del usuario" aria-label="Buscar">
+      <button class="btn btn-primary my-2 my-sm-0" type="submit" name="btnBuscar" id="btnBuscar">Buscar</button>
     </form>
-    <h2> Resultados de la busqueda</h2>
     <?php
     $criterio = "";
+    $objVenta = new Venta($cnx);
+    $objUsuario = new Usuario($cnx);
     if (isset($_POST["btnBuscar"])) {
       $criterio = $_POST["txtCriterio"];
+      $objUsuario->buscarPorId($criterio);
+      $nombre = $objUsuario->getNombre();
+      $username = $objUsuario->getLogin();
+      echo "<h2 style='padding-top: 10px; '> Resultados de la busqueda</h2>";
+      echo "<h4 style='padding-top: 10px; '>Cliente: $nombre Username: $username</h4>";
+      $objVenta->mostrarVentasPorCliente($criterio, "../reportes/rpt_listaventas.php");
+    } else {
+      $objVenta->mostrarVentas("../reportes/rpt_listaventas.php");
     }
-    $objProducto = new Producto($cnx);
-    $objProducto->buscar_seleccion($criterio, "frmconfirmaradd.php");
 
     echo "<h3> $mensaje </h3>";
     ?>

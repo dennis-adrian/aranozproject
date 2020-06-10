@@ -81,7 +81,7 @@ class Venta
             return false;
         }
     }
-    function mostrarVentaPorCliente($idCliente, $nombrereporte)
+    function mostrarVentasPorCliente($idCliente, $nombrereporte)
     {
         $sql = "select * from venta where cliente_id = $idCliente";
         $resultado = $this->cnx->execute($sql);
@@ -117,6 +117,59 @@ class Venta
                     <th scope='row'>$nro</th>
                     <td>$id</td>
                     <td>$fecha</td>
+                    <td>$estado</td>
+                    <td>$linkseleccionar</td>
+                </tr>
+                ";
+                $nro++;
+            }
+            echo "
+                </tbody>
+            </table>
+            ";
+        } else {
+            return false;
+        }
+    }
+    function mostrarVentas($nombrereporte)
+    {
+        $sql = "select * from venta";
+        $resultado = $this->cnx->execute($sql);
+        //para evitar errores en la consulta
+        //me aseguro que el resultado no sea nulo
+        //y que la cantidad de filas afectadas sea mayour a cero
+        if (isset($resultado) && $this->cnx->filas_afectadas() > 0) {
+            echo "<table class='table' style='margin-top: 20px;'>";
+            echo "
+            <thead class='thead-dark'>
+                <tr>
+                    <th scope='col'>#</th>
+                    <th scope='col'>Id.</th>
+                    <th scope='col'>Fecha</th>
+                    <th scope='col'>Id. Cliente</th>
+                    <th scope='col'>Estado</th>
+                    <th scope='col'>Ver Reporte</th>
+                </tr>
+            </thead>
+            <tbody>";
+            $nro = 1;
+            while ($registro = $this->cnx->next($resultado)) {
+                $id = $registro["id"];
+                $fecha = $registro["fecha"];
+                $cliente_id = $registro["cliente_id"];
+                $estado = $registro["estado"];
+                //$linkseleccionar = "<a href='$paginadestino?id=$id&op=4'>Adicionar al carrito</a>";
+                //en html nosotros podemos inventarnos atributos para así pasar esos atributos y usarlos como parámetros
+                $linkseleccionar = "
+                <a class='btn btn-primary' href='$nombrereporte?id=$id' target='_blank'> Ver reporte </a>
+                ";
+
+                echo "
+                <tr>
+                    <th scope='row'>$nro</th>
+                    <td>$id</td>
+                    <td>$fecha</td>
+                    <td>$cliente_id</td>
                     <td>$estado</td>
                     <td>$linkseleccionar</td>
                 </tr>

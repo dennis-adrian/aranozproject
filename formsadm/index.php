@@ -5,13 +5,12 @@ require_once("../classes/conexion.php");
 
 
 use \classes\ctrl_sesion\Ctrl_Sesion;
-use \classes\venta\Venta;
 use \classes\conexion\Conexion;
-use classes\ctrl_venta\Ctrl_Venta;
 
 Ctrl_Sesion::verificar_inicio_sesion();
 
 $cnx = new Conexion();
+
 
 ?>
 <!DOCTYPE html>
@@ -26,16 +25,10 @@ $cnx = new Conexion();
 <body>
   <?php include("incluir_menu_formularios.php"); ?>
   <div style="margin: 30px;">
-    <h1>Sistema de ventas en linea:</h1>
+    <h1>Sistema de ventas en linea</h1>
+    <h2>Bienvenido al sistema: <?php echo Ctrl_Sesion::get_nombre_usuario(); ?> </h2>
   </div>
   <?php include("incluir_estilos_pie.php"); ?>
 </body>
 
 </html>
-<?php
-
-$objVenta = new Venta($cnx);
-$objVenta->mostrarVentaPorCliente(Ctrl_Sesion::get_id_usuario(), "../reportes/rpt_listaventas.php");
-
-
-?>

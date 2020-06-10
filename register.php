@@ -47,7 +47,7 @@ function procesarAdicionar()
 
     $usuario->inicializar(0, 'cliente', $nombre, $email, $direccion, $login, $password, $telefono);
     if ($usuario->guardar())
-        header("location:login.php?msg=cliente registrado correctamente!!! Puede iniciar sesión");
+        header("location:login.php?msg=cliente%registrado");
     else {
         $error = "Error al adicionar, revise los datos!!!";
     }
@@ -55,6 +55,8 @@ function procesarAdicionar()
 //=========
 if (isset($_POST["btnAceptar"]))
     procesarAdicionar();
+if (isset($_POST["btnLogin"]))
+    header("location:login.php");
 ?>
 <!doctype html>
 <html lang="zxx">
@@ -86,7 +88,7 @@ if (isset($_POST["btnAceptar"]))
     </section>
     <!-- breadcrumb start-->
 
-    <!--================login_part Area =================-->
+    <!--================Register_part Area =================-->
     <section class="login_part padding_top">
         <div class="container">
             <div class="row text-align-center">
